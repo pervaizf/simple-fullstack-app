@@ -1,7 +1,6 @@
 // lets us create an Express Server in this file
-    //creates a variable called 'express' that we can use throughout the file
 const express = require('express')
-    //creates a variable called 'app' that we can use throughout the file
+//creates a variable called 'app' that we can use throughout the file
 const app = express()
 //Initialize variable to hold require function for MongoDB
 const MongoClient = require('mongodb').MongoClient
@@ -18,7 +17,7 @@ app.listen(3000, ()=>{
 //callback is what happens once the user enters the URL
 //callback takes (request, response) arguments
 app.get('/', (req, res)=>{
-    //send the index.html file to the web browser from the server
+    //send the index.html file to the web browser from the server when arriving at homepage
     res.sendFile(__dirname + '/index.html')
 })
 
