@@ -43,9 +43,11 @@ MongoClient.connect(dbConnectionStr,
 
         // ** Ryan - set view engine to ejs (must be addeed before use, get, or post methods)
         
-        // app.set('view engine', 'ejs')
-
-        app.use()
+//Middlewares
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
 
         // ** Pervais - get quotes from MongoDB (to be displayed on website)
         // What this GET response does is take the parameters from the client-side JS file, and we would save the input into the url, where we would grab that input, and use it to search the database for whatever category, and then populate the EJS file with the findings... We would need some work done on the client-side JS done here.
