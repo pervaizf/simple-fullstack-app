@@ -107,8 +107,6 @@ body{
   }
   /* list of categories */
   nav{
-    background-color: hsla(50,72%,92%,.1);
-    border-radius: 10px;
     align-items: center;
     display: flex;
     justify-content: space-between;
