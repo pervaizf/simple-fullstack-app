@@ -29,11 +29,11 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
         // What this GET response does is take the parameters from the client-side JS file, and we would save the input into the url, where we would grab that input, and use it to search the database for whatever category, and then populate the EJS file with the findings... We would need some work done on the client-side JS done here.
-        // app.get("/get/:quote", (req, res) => {
-        //     const category = req.params.name.toLowerCase()
-        //     let info = db.collection(dbCollection).find({"category": category}).toArray()
-        //     res.render("index.ejs", {data: info})
-        // })
+        app.get("/get/:quote", (req, res) => {
+            const category = req.params.name.toLowerCase()
+            let info = db.collection(dbCollection).find({"category": category}).toArray()
+            res.render("index.ejs", {data: info})
+        })
         
         // Rendering EJS
     app.get('/', (req, res)=>{
