@@ -153,8 +153,13 @@ body{
     padding: 10px;
    }
 
+/* quote */
+.hide{
+  display: none;
+}
 
-
-  
+span{
+  color: white;
+}
 
   
