@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/style-admin.css">
+  <title>Admin Page to Edit Database</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+</head>
+<body>
+  <h1>Add info to DB</h1>
+  <form action="/addQuote" method="POST">
+    <textarea rows="5" cols="40" placeholder="Quote" name="quote"></textarea>
+    <input type="text" placeholder="Author" name="author">
+    <select name="category">
+      <optgroup>
+        <option value="general">--Select a Category--</option>
+        <option value="general">General</option>
+        <option value="fitness">Fitness</option>
+        <option value="work">Work</option>
+        <option value="school">School</option>
+        <option value="hype">HYPE</option>
+      </optgroup>
+    </select>
+    <input type="submit">
+  </form>
+  <h2>Quotes</h2>
+      <ul class="quotes">
+        <% for(let i=0; i<info.length; i++) {%>
+        <li class="quote">
+          <span id="quote"><%= info[i].quote %></span>
+          <span id="author"><%= info[i].author %></span>
+          <span id="category"><%= info[i].category %></span>
+          <span id="likes"><%= info[i].likes %></span>
+          <span id="like">Like</span>
+          <span id="delete">Delete</span>
+        </li>  
+       <% } %>
+      </ul>
+<script type="text/javascript" src="/js/admin.js"></script>
+</body>
+</html>

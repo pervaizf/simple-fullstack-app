@@ -4,47 +4,130 @@ const PORT = 3000
 const MongoClient = require('mongodb').MongoClient
 require('dotenv').config()
 
-app.listen(process.env.PORT || PORT, ()=>{
-    console.log(`listening on ${PORT}`)
-})
-
-
-
 //Connect to MongoDB
-let dbConnectionStr = process.env.DB_STRING
-    dbName = 'motivational'
-    dbCollection = 'quotes'
-//** */
-MongoClient.connect(dbConnectionStr, 
-{ useUnifiedTopology: true })
-    .then(client => {
-        console.log(`Connected to the ${dbName} Database`)
-        const db = client.db(dbName)
-        const quotesCollection = db.collection(dbCollection)
-        
+
+let db,
+  dbConnectionStr = process.env.DB_STRING
+dbName = 'motivational'
+dbCollection = 'quotes'
+
+MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true }).then(
+  (client) => {
+    console.log(`Connected to the ${dbName} Database`)
+    db = client.db(dbName)
+  }
+)
+
 //Middleware
+
 app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-        // What this GET response does is take the parameters from the client-side JS file, and we would save the input into the url, where we would grab that input, and use it to search the database for whatever category, and then populate the EJS file with the findings... We would need some work done on the client-side JS done here.
-        app.get("/get/:quote", (req, res) => {
-            const category = req.params.name.toLowerCase()
-            let info = db.collection(dbCollection).find({"category": category}).toArray()
-            res.render("index.ejs", {data: info})
-        })
-        
-        // Rendering EJS
-    app.get('/', (req, res)=>{
-    db.collection('quotes').find().toArray()
-        .then(results=>{
-            res.render('index.ejs', { quotes: results })
-        })
-        .catch(error=>console.error(error))
-    
+// Homepage
+
+app.get('/', async (req, res) => {
+  try {
+    const data = await db
+      .collection(dbCollection)
+      .aggregate([{ $sample: { size: 1 } }])
+      .toArray()
+    res.render(`index.ejs`, { info: data })
+  } catch (err) {
+    console.error(err)
+    res.render('error/404')
+  }
 })
 
-    })
-    .catch(error => console.error(error))
+// 'Admin Page'
 
+app.get('/page-for-adding-and-changing', (req, res) => {
+  db.collection(dbCollection)
+    .find()
+    .sort({ likes: -1 })
+    .toArray()
+    .then((data) => {
+      res.render('admin.ejs', { info: data })
+    })
+    .catch((error) => console.error(error))
+})
+
+// Page for each category - Working out a better way to send the 404...
+
+app.get('/:category', async (req, res) => {
+  try {
+    const category = req.params.category
+    const data = await db
+      .collection(dbCollection)
+      .aggregate([
+        { $match: { category: `${category}` } },
+        { $sample: { size: 1 } },
+      ])
+      .toArray()
+    if (data.length === 0) {
+      return res.status(404).render('error/404')
+    }
+    res.render(`${category}.ejs`, { info: data })
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+// TO EDIT THE DATABASE
+
+app.post('/addQuote', (req, res) => {
+  db.collection(dbCollection)
+    .insertOne({
+      quote: req.body.quote,
+      author: req.body.author,
+      category: req.body.category,
+      likes: 0,
+    })
+    .then((result) => {
+      console.log('Motivation Added')
+      res.redirect('/page-for-adding-and-changing')
+    })
+    .catch((error) => console.error(error))
+})
+
+app.put('/addOneLike', (req, res) => {
+  db.collection(dbCollection)
+    .updateOne(
+      {
+        quote: req.body.quoteS,
+        author: req.body.authorS,
+        category: req.body.categoryS,
+        likes: req.body.likesS,
+      },
+      {
+        $set: {
+          likes: req.body.likesS + 1,
+        },
+      },
+      {
+        sort: { _id: -1 },
+        upsert: true,
+      }
+    )
+    .then((result) => {
+      console.log('Added One Like')
+      res.json('Like Added')
+    })
+    .catch((error) => console.error(error))
+})
+
+app.delete('/deleteQuote', (req, res) => {
+  console.log(req.body)
+  db.collection(dbCollection)
+    .deleteOne(req.body)
+    .then((result) => {
+      console.log('Quote Deleted')
+      res.json('Quote Deleted')
+    })
+    .catch((error) => console.error(error))
+})
+
+app.listen(process.env.PORT || PORT, () => {
+  console.log(`listening on ${PORT}`)
+})

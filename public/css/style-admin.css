@@ -1,0 +1,47 @@
+body{
+  font-family: 'Roboto', sans-serif;
+}
+form, h1, h2{
+  margin-left: 1rem;
+}
+form{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+form > *{
+  margin: .5rem;
+}
+input[type=submit]{
+  padding: .5rem 3rem;
+}
+#delete, #like {
+  border: .5px solid black;
+  padding: .1rem .4rem;
+  color: darkblue;
+}
+#delete:hover, #like:hover{
+  cursor: pointer;
+}
+ul{
+  margin-right: 3rem;
+}
+li{
+  line-height: 2.5rem;
+  font-size: 1.2rem;
+}
+#quote, #author, #category{
+  margin-right: 1rem;
+}
+#author{
+  display: block;
+  font-weight: bold;
+}
+#category{
+  font-variant: small-caps;
+}
+#likes{
+  color: red;
+  font-size: large;
+  margin-right: .5rem;
+}
