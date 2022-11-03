@@ -5,12 +5,13 @@
     font-family: 'Open Sans', sans-serif;
     --tw-text-opacity: 1;
     color: rgb(249 244 218/var(--tw-text-opacity));
+    text-decoration: none;
 }
 
 body{
-    background-color: black;
+    background: url(/images/climb.jpg) no-repeat center center fixed;
     padding: 100px;
-    margin: 70px auto;
+    margin: 0px auto;
     height: 100vh;
     display: grid;
      grid-template-rows: 100px 1fr;
@@ -80,6 +81,8 @@ body{
   }
   .nav-icon-3.open {
     transform: rotate(-90deg);
+    opacity:0.8;
+    
   }
   .nav-icon-3.open  span:nth-child(1){
     left:3px;
@@ -110,7 +113,7 @@ body{
     align-items: center;
     display: flex;
     justify-content: space-between;
-
+    
   }
   ul{
    
@@ -118,10 +121,16 @@ body{
     display: flex;
     justify-content: space-around;
     list-style: none;
+    
   }
   li{
     font-weight: 700;
     border-radius: 10px;
+    opacity:0.8;
+
+  }
+  li:hover{
+  opacity: 1;
   }
    /* hidden */
   .hidden{
@@ -129,11 +138,49 @@ body{
   }
 
    /* container */
-   h1{
-    background-color: hsla(50,72%,92%,.1);
+   h1 {
+    width: 350px; height: 120px;
+    background-color: rgba(0, 0, 0, 0.1);
     padding: 10px;
-    border-radius: 15px;
-   }
+    border-radius: 50px;
+    opacity: 0.5;
+    text-align: center;
+    color: darkgray;
+    font-weight: 200;
+    background: #f2f9fe;
+    background: linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+    background: -webkit-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+    background: -moz-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+    background: -ms-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+    background: -o-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+    
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    
+    position: relative;
+    margin: 120px auto 20px;
+  }
+  h1:after, h1:before {
+    content: '';
+    position: absolute;
+    background: #f2f9fe;
+    z-index: -1
+  }
+  h1:after {
+    width: 100px; height: 100px;
+    top: -50px; left: 50px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+  }
+  h1:before {
+    width: 180px; height: 180px;
+    top: -90px; right: 50px;
+    border-radius: 200px;
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+  }
    .container{
     display: flex;
     flex-direction: column;
@@ -145,12 +192,16 @@ body{
     padding: 10px;
     width: 100px;
     height: 50px;
-    border-radius: 15px;
-    font-weight: 700;
+    border-radius: 20px;
+    font-weight: 400;
+    font-size: 20px;
+    color: lightgray;
    }
    li{    
-    background-color: hsla(50,72%,92%,.1);
+    background-color: rgba(0, 0, 0, 0.1);
     padding: 10px;
+    color: rgb(255, 255, 255);
+    border-radius: 20px;
    }
 
 /* quote */
@@ -159,7 +210,12 @@ body{
 }
 
 span{
-  color: white;
+  color: rgb(49, 49, 204);
 }
 
+.quote{
+  color: rgb(49, 49, 204);
+  font-size: 23px;
+  font-weight: 500;
   
+}
